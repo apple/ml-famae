@@ -1,0 +1,77 @@
+name: 'Unimodal transfer experiments on Epilepsy'
+description: unimodal to unimodal transfer scripts
+
+parameters:
+    dataset:
+        # Pretraining path
+        'pretrain-train': './data/train.pt'
+        'pretrain-val': './data/val.pt'
+        'pretrain-test': './data/test.pt'
+    
+        # Finetuning path
+        'ft-train': './data_ft/train.pt'
+        'ft-val': './data_ft/val.pt'
+        'ft-test': './data_ft/test.pt'
+
+    training:
+        'data_dir': './data'
+        'data_name': 'SleepEDF_multi'
+
+        # algorithm specific params
+        'train_length': 3000
+        'test_length': 300
+        'classes': 5
+        'device': 'cuda'
+        'algorithm': 'bioFAME'
+        'tb_name': 'single-transfer'
+        'modality': ['default']
+        'mod_channels': 1
+        'num_workers': 4
+        'seed': 0
+
+        # other params
+        'epochs': 300
+        'lr': 0.001
+        'batch_size': 128
+        'reconstruction': True
+        'test_every_epoch': 3
+
+        # put tb files on a specific folder on bolt
+        'tb_dir': './TB_logs_bolt'
+
+        # fine-tuning pipeline
+        'fine_tune': True
+        'ft_new_data': True
+        'ft_data_name': 'TFC_Epilepsy'
+        'ft_data_dir': './data_ft'
+        'ft_load_model': False
+
+        # if not ft_new_data
+        'ft_new_modality': False
+
+        # general setting for ft
+        'ft_channel': ['default']
+        'ft_classes': 2
+        'ft_epochs': 100
+        'ft_lr': 0.001
+        'ft_n_channel': 1
+
+    hparams:
+        # model training specific hparams
+        'masking_ratio': 0.5
+        'cls_token_mode': 'avg'
+        'trans1_depth': 4
+        'patch_size': 20
+
+        'modality-decoder': False
+        'post_norm': False
+
+        'modality_embedding_token': False
+        'revin': True
+        'revin_recover': True
+        
+        'include_Enc2': True
+
+        'fft_head': 8
+        'fft_mode': 'pool'
+        'dim': 64
